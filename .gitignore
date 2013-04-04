@@ -11,3 +11,8 @@
 *.lai
 *.la
 *.a
+
+# Other (Dennis rör i grytan)
+*.vcxproj
+*.filters
+*.user
