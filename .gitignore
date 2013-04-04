@@ -16,3 +16,5 @@
 *.vcxproj
 *.filters
 *.user
+*.sdf
+*.sln
