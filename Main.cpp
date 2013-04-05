@@ -1,6 +1,5 @@
 #include "Core\Application.h"
 
-BLAasd
 
 int WINAPI WinMain( HINSTANCE hInst, HINSTANCE prevInst, PSTR cmdLine, int cmdShow)
 {
