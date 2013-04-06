@@ -58,6 +58,11 @@ LRESULT CALLBACK Application::WndProc(HWND hWnd, UINT message, WPARAM wParam, LP
 
 		break;
 
+		case WM_KEYDOWN:
+			if(wParam == VK_ESCAPE)
+				PostQuitMessage(0);
+		break;
+
 		default:
 		break;
 	}
