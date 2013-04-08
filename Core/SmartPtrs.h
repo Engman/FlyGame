@@ -27,6 +27,11 @@ struct PtrRefCount
 #pragma region PTR
 
 
+	//! Smart pointer for a regular object.
+	/** 
+	*	Regular objects, objects that is deleted normaly (ie not COM objects, och array pointers) 
+	*	can use this class to easy the use of dynamic memory 
+	*/
 	template<typename T>
 	class SmartPtrStd
 	{
@@ -61,7 +66,7 @@ struct PtrRefCount
 			bool IsValid();
 
 			/** Use with cation! 
-				Returns the memory allocated. */
+				Destroys the pointer and returns the memory allocated. */
 			void Destroy		();
 	};
 
@@ -204,13 +209,17 @@ bool SmartPtrStd<T>::IsValid()
 
 #pragma region PTR_COM
 
-
+	//! Smart pointer for COM object.
+	/** 
+	*	Regular objects, objects that is released (->Release()) 
+	*	can use this class to easy the use of dynamic memory 
+	*/
 	template<typename T>
 	class SmartPtrCom
 	{
 		private:
-			PtrRefCount	*_rc;
-			T					*_ptr;
+			PtrRefCount						*_rc;
+			T								*_ptr;
 
 		public:
 			SmartPtrCom						();
@@ -239,7 +248,7 @@ bool SmartPtrStd<T>::IsValid()
 			bool IsValid();
 
 			/** Use with cation! 
-				Returns the memory allocated. */
+				Destroys the pointer and returns the memory allocated. */
 			void Destroy					();
 	};
 
@@ -380,15 +389,6 @@ bool SmartPtrCom<T>::IsValid()
 
 
 #pragma endregion
-
-
-
-#pragma region PTR_ARRAY
-
-
-
-#pragma endregion
-
 
 
 #endif
