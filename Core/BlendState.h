@@ -16,8 +16,10 @@ namespace ShaderStates
 			BlendStates();
 			virtual ~BlendStates();
 		
-			/** The device to initiate the states with.
-			*	Set D3D11_BLEND_DESC to create custom BlendModeState, or leave bland for none */
+			/** 
+			*	The device to initiate the states with.
+			*	Set D3D11_BLEND_DESC to create custom BlendModeState, or leave bland for none 
+			*/
 			bool init(ID3D11Device*, D3D11_BLEND_DESC* desc = NULL);
 		
 			ID3D11BlendState* getAlphaBlend()					;
