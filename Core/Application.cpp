@@ -1,5 +1,6 @@
 #include "Application.h"
 
+
 Application::Application()
 {
 	WindowShell::self();
