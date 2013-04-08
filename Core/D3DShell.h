@@ -96,6 +96,10 @@ class D3DShell
 		void						setDepthStencilState(FLAGS::STATE_DEPTH_STENCIL state, UINT stencilRef);
 
 		char*						getSuportedShaderVersion() const;
+
+
+		/** Clears and sets the G-buffers and depth stencil views as the render target */
+		void						BeginGBufferRenderTargets();
 };
 
 

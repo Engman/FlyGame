@@ -3,6 +3,7 @@
 
 #include "WindowShell.h"
 #include "D3DShell.h"
+#include "GBufferShader.h"
 
 class Application
 {
@@ -13,6 +14,8 @@ class Application
 		void PlayLevel();
 
 		static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam); 
+
+		GBufferShader gBufferShader;
 
 	public:
 		Application();
