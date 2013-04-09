@@ -16,6 +16,7 @@ class Application
 		static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam); 
 
 		GBufferShader gBufferShader;
+		BaseBuffer* pMatrixBuffer;
 
 	public:
 		Application();
@@ -25,6 +26,7 @@ class Application
 		bool Initialize(HINSTANCE hInst);
 		void Run();
 		void Shutdown();
+		bool Render();
 };
 
 #endif
