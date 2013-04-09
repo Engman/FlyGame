@@ -6,6 +6,9 @@
 #include "GBufferShader.h"
 #include "Camera.h"
 #include "Input.h"
+#include "Proxy.h"
+
+typedef Input::KeyCodes Key;
 
 class Application
 {
@@ -13,6 +16,8 @@ class Application
 		bool InitD3D(Point2D size);
 		bool InitWindow(HINSTANCE& hinst, Point2D size);
 		bool InitInput();
+		bool InitGBuffers();
+		bool InitMatrixBuffer();
 		void ShowMenu();
 		void PlayLevel();
 
@@ -23,7 +28,7 @@ class Application
 
 	private:
 		GBufferShader gBufferShader;
-		BaseBuffer* pMatrixBuffer;
+		SmartPtrStd<BaseBuffer> pMatrixBuffer;
 		Camera mainCamera;
 
 	public:

@@ -71,7 +71,7 @@ class BaseBuffer
 		/**The Initialize function wants a BUFFER_TYPE::FLAG which is accesible from the BaseBuffer class */
 		HRESULT Initialize(BUFFER_INIT_DESC& desc);
 
-		void Release();
+		//void Release();
 
 		/** Sets the buffer to the pipeline with given slot */
 		HRESULT setBuffer(UINT32 slot = 0, UINT32 offset = 0);
