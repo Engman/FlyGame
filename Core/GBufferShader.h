@@ -3,7 +3,7 @@
 
 #include "IShader.h"
 
-class GBufferShader : IShader
+class GBufferShader : public IShader
 {
 	public:
 		GBufferShader();
