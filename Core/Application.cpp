@@ -23,6 +23,14 @@ bool Application::Initialize(HINSTANCE hInst)
 	if(!InitWindow(hInst, size))	return false;
 	if(!InitD3D(size))				return false;
 
+	BaseShader::BASE_SHADER_DESC gBufferDesc;
+
+	gBufferDesc.dc = D3DShell::self()->getDeviceContext();
+	gBufferDesc.device = D3DShell::self()->getDevice();
+
+	
+	this->gBufferShader.init(gBufferDesc);
+
 	return true;
 }
 

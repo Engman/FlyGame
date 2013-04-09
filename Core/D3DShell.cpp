@@ -799,3 +799,17 @@ char* D3DShell::getSuportedShaderVersion() const
 
 	return "";
 }
+
+
+
+void D3DShell::BeginGBufferRenderTargets()
+{
+	float clearColor[4] = {0.0f, 0.0f, 0.0f, 1.0f};
+
+	this->getDeviceContext()->ClearRenderTargetView(this->_prDatPtr->deffRTV, clearColor);
+	this->getDeviceContext()->ClearDepthStencilView(this->_prDatPtr->deffDepthStencil, D3D11_CLEAR_DEPTH, 1.0, 0);
+
+	ID3D11RenderTargetView* aRTViews[1] = {this->_prDatPtr->deffRTV};
+
+	this->getDeviceContext()->OMSetRenderTargets(DeferredRenderLayout::MRT_COUNT, aRTViews, this->_prDatPtr->deffDepthStencil);
+}
