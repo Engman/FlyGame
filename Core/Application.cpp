@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "vertex.h"
 
 Application::Application()
 {
@@ -26,10 +27,49 @@ bool Application::Initialize(HINSTANCE hInst)
 
 	BaseShader::BASE_SHADER_DESC gBufferDesc;
 
+	
+
 	gBufferDesc.dc = D3DShell::self()->getDeviceContext();
 	gBufferDesc.device = D3DShell::self()->getDevice();
+	gBufferDesc.VSFilename = L"../../WorkingDir/Resources/Shaders/deferredShaderVS.vs";
+	gBufferDesc.PSFilename = L"../../WorkingDir/Resources/Shaders/deferredShaderPS.ps";
+	gBufferDesc.shaderVersion = D3DShell::self()->getSuportedShaderVersion();
+	gBufferDesc.polygonLayout = VERTEX::VertexPNC_InputElementDesc;
+	gBufferDesc.nrOfElements = 3;
 
+	if(!this->gBufferShader.init(gBufferDesc))
+	{
+		return false;
+	}
+
+	this->pMatrixBuffer = new BaseBuffer();
+
+	struct MatrixBufferType
+	{
+		D3DXMATRIX world;
+		D3DXMATRIX view;
+		D3DXMATRIX projection;
+	};
+
+	BaseBuffer::BUFFER_INIT_DESC matrixBufferDesc;
+	matrixBufferDesc.dc = D3DShell::self()->getDeviceContext();
+	matrixBufferDesc.device = D3DShell::self()->getDevice();
+	matrixBufferDesc.elementSize = sizeof(MatrixBufferType);
+	matrixBufferDesc.nrOfElements = 1;
+	matrixBufferDesc.type = BUFFER_FLAG::TYPE_CONSTANT_VS_BUFFER;
+	matrixBufferDesc.usage = BUFFER_FLAG::USAGE_DYNAMIC_CPU_WRITE_DISCARD;
+
+	if(FAILED(this->pMatrixBuffer->Initialize(matrixBufferDesc)))
+	{
+		return false;
+	}
+	
 	this->gBufferShader.init(gBufferDesc);
+
+	this->mainCamera.SetProjectionMatrix(D3DX_PI/2.0f, D3DShell::self()->getAspectRatio(), 1, 1000);
+	this->mainCamera.SetOrthogonalMatrix(D3DShell::self()->getWidth(), D3DShell::self()->getHeight(), 1, 1000);
+	this->mainCamera.SetPosition(0.0f, 0.0f, 0.0f);
+	this->mainCamera.SetRotation(0.0f, 0.0f, 0.0f);
 
 	return true;
 }
@@ -45,6 +85,10 @@ void Application::Run()
 			   TranslateMessage( &msg );
 			   DispatchMessage( &msg );
 		  }
+		 else
+		 {
+			 Render();
+		 }
 
 	}
 }
@@ -53,6 +97,12 @@ void Application::Shutdown()
 {
 	WindowShell::self()->destroy();
 	D3DShell::self()->destroy();
+
+	if(this->pMatrixBuffer)
+	{
+		this->pMatrixBuffer->Release();
+		this->pMatrixBuffer = NULL;
+	}
 }
 
 LRESULT CALLBACK Application::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -98,7 +148,33 @@ void Application::MouseMoveEvent(Input::MouseMoveData d)
 	idCounter ++;
 }
 
+bool Application::Render()
+{
+	D3DShell::self()->beginScene();
 
+	IShader::DRAW_DATA gBufferDrawData;
+
+	D3DXMatrixIdentity(gBufferDrawData.worldMatrix);
+
+	struct MatrixBufferType
+	{
+		D3DXMATRIX world;
+		D3DXMATRIX view;
+		D3DXMATRIX projection;
+	};
+
+	MatrixBufferType* dataPtr = (MatrixBufferType*)(this->pMatrixBuffer->Map());
+
+	dataPtr->world = *gBufferDrawData.worldMatrix;
+	D3DXMatrixLookAtLH(&dataPtr->view, &D3DXVECTOR3(0.0f, 0.0f, -5.0f), &D3DXVECTOR3(0.0f, 0.0f, 1.0f), &D3DXVECTOR3(0.0f, 1.0f, 0.0f));
+	D3DXMatrixOrthoLH(&dataPtr->projection, 800, 600, 1.0f, 100.0f);
+
+	this->gBufferShader.addDrawData(gBufferDrawData);
+
+	D3DShell::self()->endScene();
+
+	return true;
+}
 
 
 bool Application::InitD3D(Point2D size)
