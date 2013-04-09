@@ -8,7 +8,7 @@ Application::Application()
 
 Application::Application(const Application& other)
 {
-
+	
 }
 
 Application::~Application()
@@ -21,6 +21,8 @@ bool Application::Initialize(HINSTANCE hInst)
 	Point2D size(800, 600);
 	if(!InitWindow(hInst, size))	return false;
 	if(!InitD3D(size))				return false;
+	if(!InitInput())				return false;
+
 
 	BaseShader::BASE_SHADER_DESC gBufferDesc;
 
@@ -62,7 +64,7 @@ LRESULT CALLBACK Application::WndProc(HWND hWnd, UINT message, WPARAM wParam, LP
 		break;
 
 		case WM_INPUT:
-
+			Input::self()->proccessRawDeviceData(lParam);
 		break;
 
 		case WM_KEYDOWN:
@@ -73,11 +75,28 @@ LRESULT CALLBACK Application::WndProc(HWND hWnd, UINT message, WPARAM wParam, LP
 		default:
 		break;
 	}
+
 	return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
 
 
+void Application::KeyPressEvent(Input::KeyCodes::Key k)
+{
+	static int count = 0;
+	count ++;
+
+	bool removed = Input::self()->unsubscribeKeyDown<Application>		(&Application::KeyPressEvent);
+	removed = Input::self()->unsubscribeKeyUp<Application>		(&Application::KeyPressEvent);
+	removed = Input::self()->unsubscribeMouseBtnDown<Application>	(&Application::KeyPressEvent);
+	removed = Input::self()->unsubscribeMouseBtnUp<Application>	(&Application::KeyPressEvent);
+	removed = Input::self()->unsubscribeMouseMove<Application>	(&Application::MouseMoveEvent);
+}
+void Application::MouseMoveEvent(Input::MouseMoveData d)
+{
+	static int idCounter = 0;
+	idCounter ++;
+}
 
 
 
@@ -115,4 +134,27 @@ bool Application::InitWindow(HINSTANCE& hinst, Point2D size)
 
 	return true;
 }
+bool Application::InitInput()
+{
+	Input::GLARE_INPUT_INIT_DESC d;
 
+	d.target = WindowShell::self()->getHWND();
+	d.deviceFlag = Input::Flags::NOLEGACY;
+	d.deviceType = Input::Flags::keyboard;
+
+	if(!Input::self()->registerInputDevice(d))
+		return false;
+
+
+	d.deviceType = Input::Flags::mouse;
+	if(!Input::self()->registerInputDevice(d))
+		return false;
+
+	Input::self()->subscribeKeyDown<Application>(this, &Application::KeyPressEvent);
+	Input::self()->subscribeKeyUp<Application>(this, &Application::KeyPressEvent);
+	Input::self()->subscribeMouseBtnDown<Application>(this, &Application::KeyPressEvent);
+	Input::self()->subscribeMouseBtnUp<Application>(this, &Application::KeyPressEvent);
+	Input::self()->subscribeMouseMove<Application>(this, &Application::MouseMoveEvent);
+
+	return true;
+}
