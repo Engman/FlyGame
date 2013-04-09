@@ -61,6 +61,13 @@ bool Application::Initialize(HINSTANCE hInst)
 	{
 		return false;
 	}
+	
+	this->gBufferShader.init(gBufferDesc);
+
+	this->mainCamera.SetProjectionMatrix(D3DX_PI/2.0f, D3DShell::self()->getAspectRatio(), 1, 1000);
+	this->mainCamera.SetOrthogonalMatrix(D3DShell::self()->getWidth(), D3DShell::self()->getHeight(), 1, 1000);
+	this->mainCamera.SetPosition(0.0f, 0.0f, 0.0f);
+	this->mainCamera.SetRotation(0.0f, 0.0f, 0.0f);
 
 	return true;
 }
@@ -88,6 +95,12 @@ void Application::Shutdown()
 {
 	WindowShell::self()->destroy();
 	D3DShell::self()->destroy();
+
+	if(this->pMatrixBuffer)
+	{
+		this->pMatrixBuffer->Release();
+		this->pMatrixBuffer = NULL;
+	}
 }
 
 LRESULT CALLBACK Application::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

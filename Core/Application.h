@@ -4,6 +4,7 @@
 #include "WindowShell.h"
 #include "D3DShell.h"
 #include "GBufferShader.h"
+#include "Camera.h"
 
 class Application
 {
@@ -17,6 +18,7 @@ class Application
 
 		GBufferShader gBufferShader;
 		BaseBuffer* pMatrixBuffer;
+		Camera mainCamera;
 
 	public:
 		Application();
