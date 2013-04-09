@@ -1,9 +1,14 @@
 #ifndef PLANE_H
 #define PLANE_H
 
-#include "stdafx.h"
-#include "Shader.h"
-#include "Buffer.h"
+#include <D3DX11\D3D11.h>
+#include <D3DX11\D3DX11.h>
+
+#include "..\Core\stdafx.h"
+#include "..\Core\D3DShell.h"
+#include "..\Core\misc.h"
+#include "..\Core\BaseBuffer.h"
+#include "..\Core\IShader.h"
 
 struct Vertex
 {
@@ -16,7 +21,7 @@ struct Vertex
 class Plane
 {
 private:
-	Buffer*	g_VertexBuffer;
+	BaseBuffer*	g_VertexBuffer;
 	D3DXMATRIX m_world;
 	
 	D3DXVECTOR3 getNormal(D3DXVECTOR3 p0, D3DXVECTOR3 p1, D3DXVECTOR3 p2);
@@ -24,7 +29,7 @@ private:
 public:
 	Plane();
 	~Plane();
-	void			Initialize(D3DXMATRIX world,  int height, int widht, ID3D11Device* g_Device, ID3D11DeviceContext* g_DeviceContext );
+	void			Initialize(D3DXMATRIX world,  float height, float widht, ID3D11Device* g_Device, ID3D11DeviceContext* g_DeviceContext );
 	
 	void            Update(); 
 	void			setWorld(D3DXMATRIX world);
