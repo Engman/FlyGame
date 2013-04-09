@@ -27,6 +27,7 @@ bool Application::Initialize(HINSTANCE hInst)
 	gBufferDesc.dc = D3DShell::self()->getDeviceContext();
 	gBufferDesc.device = D3DShell::self()->getDevice();
 
+	
 	this->gBufferShader.init(gBufferDesc);
 
 	return true;
