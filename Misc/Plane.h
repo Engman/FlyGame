@@ -7,8 +7,8 @@
 
 struct Vertex
 {
-	D3DXVECTOR4 pos;
-	D3DXVECTOR4 normal;
+	D3DXVECTOR3 pos;
+	D3DXVECTOR3 normal;
 	D3DXVECTOR4 color;
 };
 
@@ -19,7 +19,7 @@ private:
 	Buffer*	g_VertexBuffer;
 	D3DXMATRIX m_world;
 	
-	D3DXVECTOR4 getNormal(D3DXVECTOR3 p0, D3DXVECTOR3 p1, D3DXVECTOR3 p2);
+	D3DXVECTOR3 getNormal(D3DXVECTOR3 p0, D3DXVECTOR3 p1, D3DXVECTOR3 p2);
 	
 public:
 	Plane();
