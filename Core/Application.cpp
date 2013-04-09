@@ -61,6 +61,8 @@ bool Application::Initialize(HINSTANCE hInst)
 	{
 		return false;
 	}
+	
+	this->gBufferShader.init(gBufferDesc);
 
 	return true;
 }
