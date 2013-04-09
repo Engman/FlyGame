@@ -1,5 +1,6 @@
 #include "BaseShader.h"
 #include "GID.h"
+#include "vertex.h"
 
 /** This struct contains private data to BaseShader */
 struct BaseShader::_Data
