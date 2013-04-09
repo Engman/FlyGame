@@ -4,6 +4,7 @@
 #include "WindowShell.h"
 #include "D3DShell.h"
 #include "GBufferShader.h"
+#include "Misc\Plane.h"
 
 class Application
 {
