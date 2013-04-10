@@ -450,10 +450,14 @@ bool D3DShell::init(D3D_INIT_DESC& desc)
 #pragma endregion
 
 
-	this->_prDatPtr->blendModeState.init(this->_prDatPtr->d3dDevice);
-	this->_prDatPtr->rasterizerState.init(this->_prDatPtr->d3dDevice);
-	this->_prDatPtr->depthStencilState.init(this->_prDatPtr->d3dDevice);
-	this->_prDatPtr->samplerState.init(this->_prDatPtr->d3dDevice);
+	if(!this->_prDatPtr->blendModeState.init(this->_prDatPtr->d3dDevice))
+		return false;
+	if(!this->_prDatPtr->rasterizerState.init(this->_prDatPtr->d3dDevice))	  
+		return false;
+	if(!this->_prDatPtr->depthStencilState.init(this->_prDatPtr->d3dDevice)) 
+		return false;
+	if(!this->_prDatPtr->samplerState.init(this->_prDatPtr->d3dDevice))  
+		return false;
 
 	if(!this->_prDatPtr->InitMRTS())
 		return false;

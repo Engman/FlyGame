@@ -19,6 +19,14 @@ class GID
 		}  
 		/** Returns the unique identity */
 		int get() const { return id; }
+		operator int() const
+		{
+			return this->id;
+		}
+		bool operator == (const GID& object)
+		{
+			return this->id == object.id;
+		}
 };
 
 
