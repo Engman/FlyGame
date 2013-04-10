@@ -811,5 +811,7 @@ void D3DShell::BeginGBufferRenderTargets()
 
 	ID3D11RenderTargetView* aRTViews[1] = {this->_prDatPtr->deffRTV};
 
+	aRTViews[0] = this->_prDatPtr->deffRTV;
+
 	this->getDeviceContext()->OMSetRenderTargets(DeferredRenderLayout::MRT_COUNT, aRTViews, this->_prDatPtr->deffDepthStencil);
 }

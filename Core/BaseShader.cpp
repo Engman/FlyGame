@@ -241,6 +241,8 @@ HRESULT BaseShader::_Data::initVShader(BASE_SHADER_DESC& desc)
 	ID3D10Blob* vertexShaderBuffer = 0;
 	ID3D10Blob* errorMessage;
 
+	wchar_t p[MAX_PATH];
+	_wgetcwd(p, MAX_PATH);
 
 	// Compile the vertex shader code.
 	if(desc.VSFilename != NULL)

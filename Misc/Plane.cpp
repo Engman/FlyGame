@@ -14,13 +14,14 @@ void Plane::Initialize(D3DXMATRIX world,  float height, float widht, ID3D11Devic
 	D3DXVECTOR3 n1=getNormal(D3DXVECTOR3(0,-1,0), D3DXVECTOR3(0,0,0), D3DXVECTOR3(1,0,0));
 	D3DXVECTOR3 n2=getNormal(D3DXVECTOR3(0,-1,0), D3DXVECTOR3(1,0,0), D3DXVECTOR3(1,-1,0));	
 
-	Vertex mesh []={
-		{D3DXVECTOR4(0,height,0, 1 )		,n1, D3DXVECTOR4(200,200, 200 ,0)},
-		{D3DXVECTOR4(0,0,0,1)	, n1, D3DXVECTOR4(200,200, 200 ,0)},
+	VERTEX::VertexPNC3 mesh[] =
+	{
+		{D3DXVECTOR4(0,height,0, 1 ), n1, D3DXVECTOR4(200,200, 200 ,0)},
+		{D3DXVECTOR4(0,0,0,1)		, n1, D3DXVECTOR4(200,200, 200 ,0)},
 		{D3DXVECTOR4(widht,0,0,1)	, n1, D3DXVECTOR4(200,200, 200 ,0)},
 
-		{D3DXVECTOR4(0, height,0, 1)		, n2, D3DXVECTOR4(200,200, 200 ,0)},
-		{D3DXVECTOR4(widht,0,0, 1)	, n2, D3DXVECTOR4(200,200, 200 ,0)},
+		{D3DXVECTOR4(0, height,0, 1)	, n2, D3DXVECTOR4(200,200, 200 ,0)},
+		{D3DXVECTOR4(widht,0,0, 1)		, n2, D3DXVECTOR4(200,200, 200 ,0)},
 		{D3DXVECTOR4(widht,height,0,1)	, n2, D3DXVECTOR4(200,200, 200 ,0)}
 
 	};
@@ -28,13 +29,13 @@ void Plane::Initialize(D3DXMATRIX world,  float height, float widht, ID3D11Devic
 	BaseBuffer::BUFFER_INIT_DESC bufferDesc;
 	bufferDesc.dc = D3DShell::self()->getDeviceContext();
 	bufferDesc.device = D3DShell::self()->getDevice();
-	bufferDesc.elementSize = sizeof(Vertex);
+	bufferDesc.elementSize = sizeof(VERTEX::VertexPNC3);
 	bufferDesc.data = mesh;
 	bufferDesc.nrOfElements = 6;
 	bufferDesc.type = BUFFER_FLAG::TYPE_VERTEX_BUFFER;
 	bufferDesc.usage = BUFFER_FLAG::USAGE_DEFAULT;
 
-	m_VertexBuffer = new BaseBuffer();
+	this->m_VertexBuffer = new BaseBuffer();
 	if(FAILED(m_VertexBuffer->Initialize(bufferDesc)))
 	{
 		MessageBox(0, L"Could not initialize planeVertexBuffer! Plane.cpp - Initialize", L"Error", MB_OK);
@@ -72,13 +73,21 @@ D3DXMATRIX Plane::getWorld()
 	return m_world;
 }
 
-void Plane::Render()
+void Plane::Render( ID3D11DeviceContext* g_DeviceContext)
 {
 	IShader::DRAW_DATA draw_data;
 	draw_data.buffers.push_back(m_VertexBuffer);
 	draw_data.buffers.push_back(m_IndexBuffer);
 	draw_data.worldMatrix = &m_world;
 	m_shader->addDrawData(draw_data);
+
+	unsigned int size= sizeof(VERTEX::VertexPNC3);
+	unsigned int offset=0;
+
+	g_DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	m_VertexBuffer->setBuffer();
+
+
 }
 void Plane::SetShader(IShader* shader)
 {

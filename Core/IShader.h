@@ -25,6 +25,9 @@ class IShader
 			D3DXMATRIX* worldMatrix;
 			std::vector<BaseBuffer*> buffers;
 			std::vector<Texture2D*> textures;
+			DRAW_DATA()
+				:worldMatrix(0)
+			{}
 		};
 
 	private:

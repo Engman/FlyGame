@@ -56,6 +56,7 @@ namespace VERTEX
 		VertexPT()
 			:position(0.0f, 0.0f, 0.0f, 1.0f), texcoord(0.0f, 0.0f)
 		{}
+
 	};
 	static D3D11_INPUT_ELEMENT_DESC VertexPT_InputElementDesc[] = 
 	{
@@ -125,6 +126,26 @@ namespace VERTEX
 		{"POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0 , D3D11_INPUT_PER_VERTEX_DATA, 0},
 		{"NORMAL"  , 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 16, D3D11_INPUT_PER_VERTEX_DATA, 0},
 		{"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT   , 0, 32, D3D11_INPUT_PER_VERTEX_DATA, 0}
+	};
+
+	//struct made by linda
+	struct VertexPNC3
+	{
+		D3DXVECTOR4 position;
+		D3DXVECTOR3 normal;
+		D3DXVECTOR4 color;
+		/*VertexPNC3()
+		:position(0.0f, 0.0f, 0.0f, 1.0f), normal(0.0f, 0.0f, 0.0f), color(0.0f, 0.0f, 0.0f, 1.0f)
+		{}
+		VertexPNC3(D3DXVECTOR4 position, D3DXVECTOR3 normal, D3DXVECTOR4 color)
+		:position(position), normal(normal), color(color)
+		{}*/
+	};
+	static D3D11_INPUT_ELEMENT_DESC VertexPNC3_InputElementDesc[] = 
+	{
+		{"POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0 , D3D11_INPUT_PER_VERTEX_DATA, 0},
+		{"NORMAL"  , 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 16, D3D11_INPUT_PER_VERTEX_DATA, 0},
+		{"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT   , 0, 28, D3D11_INPUT_PER_VERTEX_DATA, 0}
 	};
 }
 

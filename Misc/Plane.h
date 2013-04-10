@@ -9,13 +9,14 @@
 #include "..\Core\misc.h"
 #include "..\Core\BaseBuffer.h"
 #include "..\Core\IShader.h"
+#include "..\Core\vertex.h"
 
-struct Vertex
-{
-	D3DXVECTOR3 pos;
-	D3DXVECTOR3 normal;
-	D3DXVECTOR4 color;
-};
+//struct Vertex
+//{
+//	D3DXVECTOR3 pos;
+//	D3DXVECTOR3 normal;
+//	D3DXVECTOR4 color;
+//};
 
 
 class Plane
@@ -36,7 +37,7 @@ public:
 	void            Update(); 
 	void			setWorld(D3DXMATRIX world);
 	
-	void			Render();
+	void			Render( ID3D11DeviceContext* g_DeviceContext);
 	D3DXMATRIX		getWorld();
 	void			SetShader(IShader* shader);
 };
