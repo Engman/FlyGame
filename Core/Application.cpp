@@ -1,5 +1,5 @@
 #include "Application.h"
-#include "vertex.h"
+#include "..\Util\vertex.h"
 
 Application::Application()
 {

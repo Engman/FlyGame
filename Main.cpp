@@ -27,6 +27,7 @@ int WINAPI WinMain( HINSTANCE hInst, HINSTANCE prevInst, PSTR cmdLine, int cmdSh
 		itoa(i, t, 10);
 		tex[i] = t[0];
 	}
+
 #else
 	Application app;
 
