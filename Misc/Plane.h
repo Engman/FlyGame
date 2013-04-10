@@ -21,20 +21,23 @@ struct Vertex
 class Plane
 {
 private:
-	BaseBuffer*	g_VertexBuffer;
+	BaseBuffer*	m_VertexBuffer;
+	BaseBuffer* m_IndexBuffer;
 	D3DXMATRIX m_world;
+	IShader* m_shader;
 	
 	D3DXVECTOR3 getNormal(D3DXVECTOR3 p0, D3DXVECTOR3 p1, D3DXVECTOR3 p2);
 	
 public:
 	Plane();
 	~Plane();
-	void			Initialize(D3DXMATRIX world,  float height, float widht, ID3D11Device* g_Device, ID3D11DeviceContext* g_DeviceContext );
+	void			Initialize(D3DXMATRIX world,  float height, float widht, ID3D11Device* g_Device, ID3D11DeviceContext* g_DeviceContext, IShader* shader);
 	
 	void            Update(); 
 	void			setWorld(D3DXMATRIX world);
 	
-	void			applyBuffer();
+	void			Render();
 	D3DXMATRIX		getWorld();
+	void			SetShader(IShader* shader);
 };
 #endif

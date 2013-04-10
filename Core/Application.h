@@ -4,7 +4,7 @@
 #include "WindowShell.h"
 #include "D3DShell.h"
 #include "GBufferShader.h"
-#include "Misc\Plane.h"
+#include "..\Misc\Plane.h"
 
 class Application
 {
@@ -18,6 +18,7 @@ class Application
 
 		GBufferShader gBufferShader;
 		BaseBuffer* pMatrixBuffer;
+		Plane* g_plane;
 
 	public:
 		Application();

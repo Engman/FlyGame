@@ -66,6 +66,11 @@ bool Application::Initialize(HINSTANCE hInst)
 	
 	this->gBufferShader.init(gBufferDesc);
 
+	D3DXMATRIX world; 
+	D3DXMatrixIdentity(&world);
+
+	g_plane->Initialize(world, 2, 2, D3DShell::self()->getDevice(), D3DShell::self()->getDeviceContext(), &gBufferShader);
+
 	return true;
 }
 
@@ -127,6 +132,8 @@ bool Application::Render()
 	IShader::DRAW_DATA gBufferDrawData;
 
 	D3DXMatrixIdentity(gBufferDrawData.worldMatrix);
+	
+	g_plane->Render();
 
 	struct MatrixBufferType
 	{
@@ -140,6 +147,13 @@ bool Application::Render()
 	dataPtr->world = *gBufferDrawData.worldMatrix;
 	D3DXMatrixLookAtLH(&dataPtr->view, &D3DXVECTOR3(0.0f, 0.0f, -5.0f), &D3DXVECTOR3(0.0f, 0.0f, 1.0f), &D3DXVECTOR3(0.0f, 1.0f, 0.0f));
 	D3DXMatrixOrthoLH(&dataPtr->projection, 800, 600, 1.0f, 100.0f);
+
+	this->pMatrixBuffer->Unmap();
+
+	
+
+
+	gBufferDrawData.buffers.push_back(pMatrixBuffer);
 
 	this->gBufferShader.addDrawData(gBufferDrawData);
 
