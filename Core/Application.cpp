@@ -1,5 +1,5 @@
 #include "Application.h"
-#include "vertex.h"
+#include "..\Util\vertex.h"
 
 
 
@@ -119,21 +119,11 @@ void Application::MouseMoveEvent(Input::MouseMoveData d)
 
 bool Application::Render()
 {
-	D3DShell::self()->beginScene();
-	//D3DShell::self()->BeginGBufferRenderTargets();
-
-	//IShader::DRAW_DATA gBufferDrawData;
-
 	D3DXMATRIX world;
 	D3DXMatrixIdentity(&world);
 	
-	g_plane->SetShader(&this->gBufferShader);
-	g_plane->Render(D3DShell::self()->getDeviceContext());
-
 	IShader::SHADER_PARAMETER_DATA gBufferDrawData;
-
 	cBufferMatrix* dataPtr = (cBufferMatrix*)(this->pMatrixBuffer->Map());
-
 	dataPtr->world = world;
 	D3DXMatrixLookAtLH(&dataPtr->view, &D3DXVECTOR3(0.0f, 0.0f, -5.0f), &D3DXVECTOR3(0.0f, 0.0f, 1.0f), &D3DXVECTOR3(0.0f, 1.0f, 0.0f));
 	D3DXMatrixOrthoLH(&dataPtr->projection, 800, 600, 1.0f, 100.0f);
@@ -143,20 +133,23 @@ bool Application::Render()
 	D3DXMatrixTranspose(&dataPtr->view,&dataPtr->view);
 	dataPtr->worldInvTranspose = world;
 	this->pMatrixBuffer->Unmap();
-
 	gBufferDrawData.cMatrixBuffer = this->pMatrixBuffer;
 	gBufferDrawData.dc = D3DShell::self()->getDeviceContext();
 	
 	//pMatrixBuffer->setBuffer();
 	//this->gBufferShader.addDrawData(gBufferDrawData);
-	
+	D3DShell::self()->BeginGBufferRenderTargets();
+	g_plane->SetShader(&this->gBufferShader);
+	g_plane->Render(D3DShell::self()->getDeviceContext());
 	this->gBufferShader.draw(gBufferDrawData);
 
+	//render second pass to main render target 
+	D3DShell::self()->setRenderTarget();
+	D3DShell::self()->beginScene();
+	//D3DShell::self()->setSamplerState(FLAGS::SAMPLER_Linear, FLAGS::PS, 0,1);
 	this->g_plane->SetShader(&g_colorShader);
 	this->g_plane->Render(D3DShell::self()->getDeviceContext());
 	this->g_colorShader.draw(gBufferDrawData);
-
-	D3DShell::self()->getDeviceContext()->Draw(6,0);
 
 	D3DShell::self()->endScene();
 
@@ -202,7 +195,7 @@ bool Application::InitInput()
 	Input::GLARE_INPUT_INIT_DESC d;
 
 	d.target = WindowShell::self()->getHWND();
-	d.deviceFlag = Input::Flags::NOLEGACY;
+	d.deviceFlag = Input::Flags::DeviceFlags::DAFAULT;
 	d.deviceType = Input::Flags::keyboard;
 
 	if(!Input::self()->registerInputDevice(d))
@@ -254,7 +247,7 @@ bool Application::InitColorShader()
 	gBufferDesc.polygonLayout = VERTEX::VertexPNC3_InputElementDesc;
 	gBufferDesc.nrOfElements = 3;
 
-	if(!this->gBufferShader.init(gBufferDesc))	
+	if(!this->g_colorShader.init(gBufferDesc))	
 		return false;
 
 	return true;

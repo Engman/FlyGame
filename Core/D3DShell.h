@@ -11,8 +11,8 @@
 #include "SamplerState.h"
 #include "BlendState.h"
 #include "ShaderFlagStates.h"
-#include "GID.h"
-#include "SmartPtrs.h"
+#include "..\Util\GID.h"
+#include "..\Util\SmartPtrs.h"
 #include "DeferredRenderingLayout.h"
 
 /**
@@ -100,6 +100,7 @@ class D3DShell
 
 		/** Clears and sets the G-buffers and depth stencil views as the render target */
 		void						BeginGBufferRenderTargets();
+		ID3D11ShaderResourceView*	getDefferedSRV();
 };
 
 

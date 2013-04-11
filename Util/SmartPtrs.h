@@ -391,5 +391,190 @@ bool SmartPtrCom<T>::IsValid()
 #pragma endregion
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	#pragma region PTR_ARRAY
+
+
+	//! Smart pointer for a regular object.
+	/** 
+	*	Regular objects, objects that is deleted normaly (ie not COM objects, och array pointers) 
+	*	can use this class to easy the use of dynamic memory 
+	*/
+	template<typename T>
+	class SmartPtrArr
+	{
+		private:
+			PtrRefCount							*_rc;
+			T									*_ptr;
+
+		public:
+			SmartPtrArr							();
+			SmartPtrArr							(T* p);
+			SmartPtrArr							(const SmartPtrArr&);
+			virtual~SmartPtrArr					();
+			SmartPtrArr&	operator=			(const SmartPtrArr<T>&);
+			bool			operator==			(const SmartPtrArr<T>&);
+			bool			operator==			(const T*);
+			T&				operator[]			(int i);
+							operator T*			();
+
+
+			/** Adds a new pointer.
+				If the pointer is occupied, this will not do anything and return false. (See Swap instead) */
+			bool Add(T*);
+
+			/** Changes the current pointer with a new one.
+				The old pointer will be deleted, thus making the content useless in other places. */
+			void Swap(T*);
+
+			/** Checks if the pointer is valid (not NULL)
+				Returns true for valid, else false. */
+			bool IsValid();
+
+			/** Use with cation! 
+				Destroys the pointer and returns the memory allocated. */
+			void Destroy		();
+	};
+
+#pragma region DECLARATION
+
+
+		template<typename T>
+	SmartPtrArr<T>::SmartPtrArr()
+		:_rc(0), _ptr(0)
+	{ }
+		template<typename T>
+	SmartPtrArr<T>::SmartPtrArr(T* p)
+		:_ptr(p)
+	{ 
+		this->_rc = new PtrRefCount();
+		this->_rc->Add();
+	}
+		template<typename T>
+	SmartPtrArr<T>::SmartPtrArr(const SmartPtrArr& d)
+		:_ptr(d._ptr), _rc(d._rc)
+	{
+		if(this->_rc)
+			this->_rc->Add();
+	}
+		template<typename T>
+	SmartPtrArr<T>::~SmartPtrArr()
+	{
+		if (this->_rc && this->_rc->Release() == 0)
+		{
+			Destroy();
+		}
+	}
+
+
+#pragma region OPERATOR
+
+
+		template<typename T>
+	SmartPtrArr<T>& SmartPtrArr<T>::operator= (const SmartPtrArr<T>& p)
+	{
+		if (this != &p)
+		{
+			if(this->_rc && this->_rc->Release() == 0)
+			{
+				Destroy();
+			}
+		
+			this->_ptr = p._ptr;
+			this->_rc = p._rc;
+			this->_rc->Add();
+		}
+		return *this;
+	}
+		template<typename T>
+	bool SmartPtrArr<T>::operator== (const SmartPtrArr<T>& d)
+	{
+		return d._ptr == this->_ptr;
+	}
+		template<typename T>
+	bool SmartPtrArr<T>::operator== (const T* p)
+	{
+		return p == this->_ptr;
+	}
+		template<typename T>
+	T& SmartPtrArr<T>::operator[] (int i)
+	{
+		return this->_ptr[i];
+	}
+	
+		template<typename T>
+	SmartPtrArr<T>::operator T*()
+	{
+		return &this->_ptr[0];
+	}
+
+#pragma endregion
+
+		template<typename T>
+	bool SmartPtrArr<T>::Add(T* p)
+	{
+		if(this->_ptr)
+			return false;
+
+		if(!this->_rc)
+			this->_rc = new PtrRefCount();
+
+		this->_ptr = p;
+		this->_rc->Add();
+
+		return true;
+	}
+		template<typename T>
+	void SmartPtrArr<T>::Swap(T* p)
+	{
+		if (this->_ptr != p)
+		{
+			if(this->_ptr)
+				delete [] this->_ptr();
+			if(!this->_rc)
+				this->_rc = new PtrRefCount();
+			this->_rc->Reset();
+
+			this->_ptr = p;
+			this->_rc->Add();
+		}
+	}
+		template<typename T>
+	bool SmartPtrArr<T>::IsValid()
+	{
+		return (this->_ptr != NULL)  ?	true : false;
+	}
+
+		template<typename T>
+	void SmartPtrArr<T>::Destroy()
+	{
+		delete this->_rc;
+		this->_rc = NULL;
+		delete [] this->_ptr;
+		this->_ptr = NULL;
+	}
+
+
+#pragma endregion
+
+#pragma endregion
+
+
+
+
 #endif
    

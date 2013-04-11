@@ -10,9 +10,12 @@ public:
 	ColorShader();
 
 	void draw(SHADER_PARAMETER_DATA& drawData);
+	void setSRVBuffer();
 
 private:
+	ID3D11ShaderResourceView *m_colorSRV; 
+	BaseBuffer SRVBuffer;
+	void createSRVBuffer();
 
 };
-
 #endif

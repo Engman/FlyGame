@@ -3,12 +3,16 @@
 
 #include "WindowShell.h"
 #include "D3DShell.h"
+
 #include "Render\GBufferShader.h"
 #include "Render\ColorShader.h"
 #include "..\Misc\Plane.h"
-#include "Camera.h"
+
+
+#include "..\Util\Camera.h"
+
 #include "Input.h"
-#include "Proxy.h"
+#include "..\Util\Proxy.h"
 
 typedef Input::KeyCodes Key;
 

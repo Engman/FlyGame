@@ -55,5 +55,13 @@ struct cBufferLights
 	std::vector<SpotLightProxy>			spotLights;
 };
 
+struct ViewFrustum
+{
+	D3DXVECTOR4 plane[6];
+
+	D3DXVECTOR3 spherePoint;
+	float radius;
+};
+
 #endif
 

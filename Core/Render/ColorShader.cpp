@@ -2,6 +2,7 @@
 
 ColorShader::ColorShader()
 {
+	createSRVBuffer();
 
 }
 
@@ -33,4 +34,14 @@ void ColorShader::draw(SHADER_PARAMETER_DATA& wMatrixData)
 		this->shader->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		this->shader->GetDeviceContext()->DrawIndexed(indexC, 0, 0);
 	}
+	this->clearData();
 }
+void ColorShader::setSRVBuffer()
+{
+	ID3D11ShaderResourceView* srv [1]; 
+	srv[0]= D3DShell::self()->getDefferedSRV();
+	D3DShell::self()->getDeviceContext()->PSSetShaderResources(0,1, srv);
+	
+	
+}
+

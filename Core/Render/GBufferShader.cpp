@@ -33,4 +33,5 @@ void GBufferShader::draw(SHADER_PARAMETER_DATA& wMatrixData)
 		this->shader->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		this->shader->GetDeviceContext()->DrawIndexed(indexC, 0, 0);
 	}
+	this->clearData();
 }

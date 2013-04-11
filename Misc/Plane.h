@@ -6,10 +6,10 @@
 
 #include "..\Core\stdafx.h"
 #include "..\Core\D3DShell.h"
-#include "..\Core\misc.h"
+#include "..\Util\misc.h"
 #include "..\Core\BaseBuffer.h"
 #include "..\Core\IShader.h"
-#include "..\Core\vertex.h"
+#include "..\Util\vertex.h"
 
 //struct Vertex
 //{

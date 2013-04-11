@@ -9,22 +9,23 @@ Plane::~Plane()
 	DELETE_PTR(m_VertexBuffer);
 	//SAFE_DELETE(g_VertexBuffer);
 }
-void Plane::Initialize(D3DXMATRIX world,  float height, float widht, ID3D11Device* g_Device, ID3D11DeviceContext* g_DeviceContext, IShader* shader )
+void Plane::Initialize(D3DXMATRIX world,  float height, float width, ID3D11Device* g_Device, ID3D11DeviceContext* g_DeviceContext, IShader* shader )
 {
 	D3DXVECTOR3 n1=getNormal(D3DXVECTOR3(0,-1,0), D3DXVECTOR3(0,0,0), D3DXVECTOR3(1,0,0));
 	D3DXVECTOR3 n2=getNormal(D3DXVECTOR3(0,-1,0), D3DXVECTOR3(1,0,0), D3DXVECTOR3(1,-1,0));	
 
 	VERTEX::VertexPNC3 mesh[] =
 	{
-		{D3DXVECTOR4(0,height,0, 1 ), n1, D3DXVECTOR4(200,200, 200 ,0)},
-		{D3DXVECTOR4(0,0,0,1)		, n1, D3DXVECTOR4(200,200, 200 ,0)},
-		{D3DXVECTOR4(widht,0,0,1)	, n1, D3DXVECTOR4(200,200, 200 ,0)},
+		{D3DXVECTOR4(-width, -height,0, 1 ), n1, D3DXVECTOR4(200,200, 200 ,0)},
+		{D3DXVECTOR4(-width,height,0,1)		, n1, D3DXVECTOR4(200,200, 200 ,0)},
+		{D3DXVECTOR4(width,height,0,1)	, n1, D3DXVECTOR4(200,200, 200 ,0)},
 
-		{D3DXVECTOR4(0, height,0, 1)	, n2, D3DXVECTOR4(200,200, 200 ,0)},
-		{D3DXVECTOR4(widht,0,0, 1)		, n2, D3DXVECTOR4(200,200, 200 ,0)},
-		{D3DXVECTOR4(widht,height,0,1)	, n2, D3DXVECTOR4(200,200, 200 ,0)}
+		{D3DXVECTOR4(-width, -height,0, 1)	, n2, D3DXVECTOR4(200,200, 200 ,0)},
+		{D3DXVECTOR4(width,height,0, 1)		, n2, D3DXVECTOR4(200,200, 200 ,0)},
+		{D3DXVECTOR4(width,-height, 0,1)	, n2, D3DXVECTOR4(200,200, 200 ,0)}
 
 	};
+
 
 	BaseBuffer::BUFFER_INIT_DESC bufferDesc;
 	bufferDesc.dc = D3DShell::self()->getDeviceContext();
