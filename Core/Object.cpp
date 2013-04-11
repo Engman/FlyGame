@@ -19,8 +19,9 @@ void Object::Render()
 	
 }
 
-bool Object::Initialize(/*Model* modelRawData*/)
+bool Object::Initialize(RawObjectData modelRawData)
 {
+	
 	return true;
 }
 

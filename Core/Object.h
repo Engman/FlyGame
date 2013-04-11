@@ -2,6 +2,7 @@
 #define I_STATIC_OBJECT_H
 
 #include "Entity.h"
+#include "..\Util\RawObjectData.h"
 //#include "BoundingBox"
 //#include "Material"
 
@@ -18,7 +19,7 @@ class Object		:public Entity
 		virtual void Update();
 		virtual void Render();
 
-		virtual bool Initialize(/*Model* modelRawData*/);
+		virtual bool Initialize(RawObjectData modelRawData);
 };
 
 

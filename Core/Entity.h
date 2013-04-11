@@ -26,10 +26,12 @@ class Entity abstract
 		vec3 front;
 		vec3 right;
 		vec3 up;
+		/** Use this to add buffers, DONT FORGET TO INCREMENT [nrOfBuffers]!! */
 		SmartPtrArr<BaseBuffer> buffers;
+		int nrOfBuffers;
 
 	public:
-		Entity(int _type, int nrOfBuffers)
+		Entity(int _type)
 			:type(_type)
 		{}
 		Entity(const Entity& origObj)
