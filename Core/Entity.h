@@ -1,16 +1,15 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include "GID.h"
+#include "..\Util\GID.h"
 #include "BaseBuffer.h"
 #include "..\Util\misc.h"
-#include "SmartPtrs.h"
+#include "..\Util\SmartPtrs.h"
 
 namespace Type
 {
 	const int LIGHT				=  0;
-	const int I_STATIC_OBJECT	=  1;
-	const int I_DYNAMIC_OBJECT	=  2;
+	const int I_DRAWABLE_OBJECT	=  1;
 	const int TYPELESS			= -1;
 }
 
@@ -30,7 +29,7 @@ class Entity abstract
 		SmartPtrArr<BaseBuffer> buffers;
 
 	public:
-		Entity(int _type)
+		Entity(int _type, int nrOfBuffers)
 			:type(_type)
 		{}
 		Entity(const Entity& origObj)
@@ -107,6 +106,11 @@ class Entity abstract
 		{
 			return this->buffers;
 		}
+
+		virtual void Update(){}
+		virtual void Render(){}
+
+		
 };
 
 
