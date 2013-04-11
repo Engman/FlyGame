@@ -112,8 +112,20 @@ bool Application::Render()
 {
 	D3DShell::self()->beginScene();
 
+<<<<<<< HEAD
 	IShader::SHADER_PARAMETER_DATA gBufferDrawData;
 	
+=======
+	D3DShell::self()->BeginGBufferRenderTargets();
+
+	IShader::DRAW_DATA gBufferDrawData;
+
+	D3DXMATRIX world;
+
+	D3DXMatrixIdentity(&world);
+
+	gBufferDrawData.worldMatrix = &world;
+>>>>>>> robin_branch
 
 	cBufferMatrix* dataPtr = (cBufferMatrix*)(this->pMatrixBuffer->Map());
 	if(dataPtr)
