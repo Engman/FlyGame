@@ -2,7 +2,7 @@
 
 ColorShader::ColorShader()
 {
-	createSRVBuffer();
+
 
 }
 
