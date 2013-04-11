@@ -5,9 +5,9 @@
 #include "BaseBuffer.h"
 #include "BaseShader.h"
 #include "Texture2D.h"
-#include "GID.h"
-#include "Proxy.h"
-#include "SmartPtrs.h"
+#include "..\Util\GID.h"
+#include "..\Util\Proxy.h"
+#include "..\Util\SmartPtrs.h"
 
 /** Inherit to create shaders */
 class IShader
