@@ -42,6 +42,8 @@ void Plane::Initialize(D3DXMATRIX world,  float height, float widht, ID3D11Devic
 	}
 
 	int index []= {0,1,2,3,4,5};
+	bufferDesc.dc = D3DShell::self()->getDeviceContext();
+	bufferDesc.device = D3DShell::self()->getDevice();
 	bufferDesc.elementSize = sizeof(int);
 	bufferDesc.data = index;
 	bufferDesc.nrOfElements = 6; 
@@ -81,11 +83,11 @@ void Plane::Render( ID3D11DeviceContext* g_DeviceContext)
 	draw_data.worldMatrix = &m_world;
 	m_shader->addDrawData(draw_data);
 
-	unsigned int size= sizeof(VERTEX::VertexPNC3);
-	unsigned int offset=0;
+	//unsigned int size= sizeof(VERTEX::VertexPNC3);
+	//unsigned int offset=0;
 
-	g_DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	m_VertexBuffer->setBuffer();
+	//g_DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	//m_VertexBuffer->setBuffer();
 
 
 }

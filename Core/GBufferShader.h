@@ -2,6 +2,7 @@
 #define GBUFFERSHADER_H
 
 #include "IShader.h"
+#include "D3DShell.h"
 
 class GBufferShader : public IShader
 {

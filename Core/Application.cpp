@@ -119,7 +119,7 @@ void Application::MouseMoveEvent(Input::MouseMoveData d)
 bool Application::Render()
 {
 	D3DShell::self()->beginScene();
-	D3DShell::self()->BeginGBufferRenderTargets();
+	//D3DShell::self()->BeginGBufferRenderTargets();
 
 	//IShader::DRAW_DATA gBufferDrawData;
 
@@ -142,8 +142,10 @@ bool Application::Render()
 	dataPtr->worldInvTranspose = world;
 	this->pMatrixBuffer->Unmap();
 
-	//gBufferDrawData.cMatrixBuffer = this->pMatrixBuffer;
-	pMatrixBuffer->setBuffer();
+	gBufferDrawData.cMatrixBuffer = this->pMatrixBuffer;
+	gBufferDrawData.dc = D3DShell::self()->getDeviceContext();
+	
+	//pMatrixBuffer->setBuffer();
 	//this->gBufferShader.addDrawData(gBufferDrawData);
 	
 	this->gBufferShader.draw(gBufferDrawData);
@@ -219,8 +221,10 @@ bool Application::InitGBuffers()
 
 	gBufferDesc.dc = D3DShell::self()->getDeviceContext();
 	gBufferDesc.device = D3DShell::self()->getDevice();
-	gBufferDesc.VSFilename = L"../Resources/Shaders/deferredShaderVS.vs";
-	gBufferDesc.PSFilename = L"../Resources/Shaders/deferredShaderPS.ps";
+	//gBufferDesc.VSFilename = L"../Resources/Shaders/deferredShaderVS.vs";
+	//gBufferDesc.PSFilename = L"../Resources/Shaders/deferredShaderPS.ps";
+	gBufferDesc.VSFilename = L"../Resources/Shaders/colorVS.vs";
+	gBufferDesc.PSFilename = L"../Resources/Shaders/colorPS.ps";
 	gBufferDesc.shaderVersion = D3DShell::self()->getSuportedShaderVersion();
 	gBufferDesc.polygonLayout = VERTEX::VertexPNC3_InputElementDesc;
 	gBufferDesc.nrOfElements = 3;
