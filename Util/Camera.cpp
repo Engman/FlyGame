@@ -219,8 +219,3 @@ void Camera::SetRotationZ(float z)
 {
 	this->rotationZ = z;
 }
-
-ViewFrustum Camera::GetViewFrustum()
-{
-	return new
-}

@@ -110,31 +110,11 @@ void Application::MouseMoveEvent(Input::MouseMoveData d)
 
 bool Application::Render()
 {
+	//D3DShell::self()->BeginGBufferRenderTargets();
+
 	D3DShell::self()->beginScene();
-
-<<<<<<< HEAD
-	IShader::SHADER_PARAMETER_DATA gBufferDrawData;
 	
-=======
-	D3DShell::self()->BeginGBufferRenderTargets();
 
-	IShader::DRAW_DATA gBufferDrawData;
-
-	D3DXMATRIX world;
-
-	D3DXMatrixIdentity(&world);
-
-	gBufferDrawData.worldMatrix = &world;
->>>>>>> robin_branch
-
-	cBufferMatrix* dataPtr = (cBufferMatrix*)(this->pMatrixBuffer->Map());
-	if(dataPtr)
-	{
-		D3DXMatrixLookAtLH(&dataPtr->view, &D3DXVECTOR3(0.0f, 0.0f, -5.0f), &D3DXVECTOR3(0.0f, 0.0f, 1.0f), &D3DXVECTOR3(0.0f, 1.0f, 0.0f));
-		D3DXMatrixOrthoLH(&dataPtr->projection, 800, 600, 1.0f, 100.0f);
-		this->pMatrixBuffer->Unmap();
-	}
-	this->gBufferShader.draw(gBufferDrawData);
 
 	D3DShell::self()->endScene();
 
@@ -180,7 +160,7 @@ bool Application::InitInput()
 	Input::GLARE_INPUT_INIT_DESC d;
 
 	d.target = WindowShell::self()->getHWND();
-	d.deviceFlag = Input::Flags::NOLEGACY;
+	d.deviceFlag = Input::Flags::DeviceFlags::DAFAULT;
 	d.deviceType = Input::Flags::keyboard;
 
 	if(!Input::self()->registerInputDevice(d))
