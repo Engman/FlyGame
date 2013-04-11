@@ -3,7 +3,8 @@
 
 #include "WindowShell.h"
 #include "D3DShell.h"
-#include "GBufferShader.h"
+#include "Render\GBufferShader.h"
+#include "Render\ColorShader.h"
 #include "..\Misc\Plane.h"
 #include "Camera.h"
 #include "Input.h"
@@ -18,6 +19,7 @@ class Application
 		bool InitWindow(HINSTANCE& hinst, Point2D size);
 		bool InitInput();
 		bool InitGBuffers();
+		bool InitColorShader();
 		bool InitMatrixBuffer();
 		void ShowMenu();
 		void PlayLevel();
@@ -29,6 +31,7 @@ class Application
 
 	private:
 		GBufferShader gBufferShader;
+		ColorShader g_colorShader; 
 
 		BaseBuffer* pMatrixBuffer;
 		Plane* g_plane;

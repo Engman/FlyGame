@@ -28,6 +28,7 @@ bool Application::Initialize(HINSTANCE hInst)
 	if(!InitD3D(size))				return false;
 	if(!InitInput())				return false;
 	if(!InitGBuffers())				return false;
+	if(!InitColorShader())			return false;
 	if(!InitMatrixBuffer())			return false;
 
 
@@ -126,6 +127,7 @@ bool Application::Render()
 	D3DXMATRIX world;
 	D3DXMatrixIdentity(&world);
 	
+	g_plane->SetShader(&this->gBufferShader);
 	g_plane->Render(D3DShell::self()->getDeviceContext());
 
 	IShader::SHADER_PARAMETER_DATA gBufferDrawData;
@@ -149,6 +151,10 @@ bool Application::Render()
 	//this->gBufferShader.addDrawData(gBufferDrawData);
 	
 	this->gBufferShader.draw(gBufferDrawData);
+
+	this->g_plane->SetShader(&g_colorShader);
+	this->g_plane->Render(D3DShell::self()->getDeviceContext());
+	this->g_colorShader.draw(gBufferDrawData);
 
 	D3DShell::self()->getDeviceContext()->Draw(6,0);
 
@@ -216,6 +222,25 @@ bool Application::InitInput()
 	return true;
 }
 bool Application::InitGBuffers()
+{
+	BaseShader::BASE_SHADER_DESC gBufferDesc;
+
+	gBufferDesc.dc = D3DShell::self()->getDeviceContext();
+	gBufferDesc.device = D3DShell::self()->getDevice();
+	gBufferDesc.VSFilename = L"../Resources/Shaders/deferredShaderVS.vs";
+	gBufferDesc.PSFilename = L"../Resources/Shaders/deferredShaderPS.ps";
+	//gBufferDesc.VSFilename = L"../Resources/Shaders/colorVS.vs";
+	//gBufferDesc.PSFilename = L"../Resources/Shaders/colorPS.ps";
+	gBufferDesc.shaderVersion = D3DShell::self()->getSuportedShaderVersion();
+	gBufferDesc.polygonLayout = VERTEX::VertexPNC3_InputElementDesc;
+	gBufferDesc.nrOfElements = 3;
+
+	if(!this->gBufferShader.init(gBufferDesc))	
+		return false;
+
+	return true;
+}
+bool Application::InitColorShader()
 {
 	BaseShader::BASE_SHADER_DESC gBufferDesc;
 
