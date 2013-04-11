@@ -420,10 +420,10 @@ bool SmartPtrCom<T>::IsValid()
 		private:
 			PtrRefCount							*_rc;
 			T									*_ptr;
+			int									size;
 
 		public:
-			SmartPtrArr							();
-			SmartPtrArr							(T* p);
+			SmartPtrArr							(int size);
 			SmartPtrArr							(const SmartPtrArr&);
 			virtual~SmartPtrArr					();
 			SmartPtrArr&	operator=			(const SmartPtrArr<T>&);
@@ -454,16 +454,9 @@ bool SmartPtrCom<T>::IsValid()
 
 
 		template<typename T>
-	SmartPtrArr<T>::SmartPtrArr()
+	SmartPtrArr<T>::SmartPtrArr(int _size)
 		:_rc(0), _ptr(0)
-	{ }
-		template<typename T>
-	SmartPtrArr<T>::SmartPtrArr(T* p)
-		:_ptr(p)
-	{ 
-		this->_rc = new PtrRefCount();
-		this->_rc->Add();
-	}
+	{ this->size = _size; }
 		template<typename T>
 	SmartPtrArr<T>::SmartPtrArr(const SmartPtrArr& d)
 		:_ptr(d._ptr), _rc(d._rc)

@@ -5,16 +5,20 @@
 //#include "BoundingBox"
 //#include "Material"
 
-class IStaticObject		:public Entity
+class Object		:public Entity
 {
 	protected:
 		//BoundingBox boundingBox;
-
+		//Mesh
 
 	public:
-		IStaticObject();
-		virtual~IStaticObject();
+		Object();
+		virtual~Object();
 
+		virtual void Update();
+		virtual void Render();
+
+		virtual bool Initialize(/*Model* modelRawData*/);
 };
 
 
