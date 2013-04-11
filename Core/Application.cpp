@@ -110,17 +110,12 @@ void Application::MouseMoveEvent(Input::MouseMoveData d)
 
 bool Application::Render()
 {
-	/** Deferred rendering */
-	D3DShell::self()->BeginGBufferRenderTargets();
+	//D3DShell::self()->BeginGBufferRenderTargets();
 
 
-
-	D3DShell::self()->setRenderTarget();
-
-	/** Final rendering */
 	D3DShell::self()->beginScene();
-
 	
+
 
 	D3DShell::self()->endScene();
 
@@ -166,7 +161,7 @@ bool Application::InitInput()
 	Input::GLARE_INPUT_INIT_DESC d;
 
 	d.target = WindowShell::self()->getHWND();
-	d.deviceFlag = Input::Flags::NOLEGACY;
+	d.deviceFlag = Input::Flags::DeviceFlags::DAFAULT;
 	d.deviceType = Input::Flags::keyboard;
 
 	if(!Input::self()->registerInputDevice(d))
