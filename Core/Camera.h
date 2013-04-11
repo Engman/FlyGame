@@ -2,6 +2,7 @@
 #define CAMERA_H
 
 #include <d3dx10math.h>
+#include "Proxy.h"
 
 class Camera
 {
@@ -47,6 +48,8 @@ class Camera
 		/**Use these two functions to get vectors that are parallel to the X and Z-axes (useful for ground movement*/
 		D3DXVECTOR3	GetParallelForward() const;
 		D3DXVECTOR3 GetParallelRight() const;
+
+		ViewFrustum GetViewFrustum();
 };
 
 #endif

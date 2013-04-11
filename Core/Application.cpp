@@ -96,11 +96,7 @@ void Application::Shutdown()
 	WindowShell::self()->destroy();
 	D3DShell::self()->destroy();
 
-	if(this->pMatrixBuffer)
-	{
-		this->pMatrixBuffer->Release();
-		this->pMatrixBuffer = NULL;
-	}
+
 }
 
 LRESULT CALLBACK Application::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -133,9 +129,15 @@ bool Application::Render()
 {
 	D3DShell::self()->beginScene();
 
+	D3DShell::self()->BeginGBufferRenderTargets();
+
 	IShader::DRAW_DATA gBufferDrawData;
 
-	D3DXMatrixIdentity(gBufferDrawData.worldMatrix);
+	D3DXMATRIX world;
+
+	D3DXMatrixIdentity(&world);
+
+	gBufferDrawData.worldMatrix = &world;
 
 	struct MatrixBufferType
 	{
