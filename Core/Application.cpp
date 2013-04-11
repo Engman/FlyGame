@@ -110,31 +110,17 @@ void Application::MouseMoveEvent(Input::MouseMoveData d)
 
 bool Application::Render()
 {
-	D3DShell::self()->beginScene();
-
-<<<<<<< HEAD
-	IShader::SHADER_PARAMETER_DATA gBufferDrawData;
-	
-=======
+	/** Deferred rendering */
 	D3DShell::self()->BeginGBufferRenderTargets();
 
-	IShader::DRAW_DATA gBufferDrawData;
 
-	D3DXMATRIX world;
 
-	D3DXMatrixIdentity(&world);
+	D3DShell::self()->setRenderTarget();
 
-	gBufferDrawData.worldMatrix = &world;
->>>>>>> robin_branch
+	/** Final rendering */
+	D3DShell::self()->beginScene();
 
-	cBufferMatrix* dataPtr = (cBufferMatrix*)(this->pMatrixBuffer->Map());
-	if(dataPtr)
-	{
-		D3DXMatrixLookAtLH(&dataPtr->view, &D3DXVECTOR3(0.0f, 0.0f, -5.0f), &D3DXVECTOR3(0.0f, 0.0f, 1.0f), &D3DXVECTOR3(0.0f, 1.0f, 0.0f));
-		D3DXMatrixOrthoLH(&dataPtr->projection, 800, 600, 1.0f, 100.0f);
-		this->pMatrixBuffer->Unmap();
-	}
-	this->gBufferShader.draw(gBufferDrawData);
+	
 
 	D3DShell::self()->endScene();
 

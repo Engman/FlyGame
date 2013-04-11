@@ -222,5 +222,5 @@ void Camera::SetRotationZ(float z)
 
 ViewFrustum Camera::GetViewFrustum()
 {
-	return new
+	return ViewFrustum();
 }

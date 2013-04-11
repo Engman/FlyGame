@@ -2,7 +2,6 @@
 #define CAMERA_H
 
 #include <D3DX11\d3dx10math.h>
-#include <d3dx10math.h>
 #include "Proxy.h"
 
 class Camera
