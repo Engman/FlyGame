@@ -119,10 +119,33 @@ void Application::MouseMoveEvent(Input::MouseMoveData d)
 
 bool Application::Render()
 {
+<<<<<<< HEAD
 	D3DXMATRIX world;
 	D3DXMatrixIdentity(&world);
 	
 	IShader::SHADER_PARAMETER_DATA gBufferDrawData;
+=======
+<<<<<<< HEAD
+	D3DShell::self()->beginScene();
+	D3DShell::self()->BeginGBufferRenderTargets();
+
+	//IShader::DRAW_DATA gBufferDrawData;
+
+	D3DXMATRIX world;
+	D3DXMatrixIdentity(&world);
+=======
+	//D3DShell::self()->BeginGBufferRenderTargets();
+
+
+	D3DShell::self()->beginScene();
+>>>>>>> 1ed802f4b6ab5e0da54017392c9b581129a6155b
+	
+	g_plane->Render(D3DShell::self()->getDeviceContext());
+
+	IShader::SHADER_PARAMETER_DATA gBufferDrawData;
+
+<<<<<<< HEAD
+>>>>>>> fc10602812c6af744e3636f83959958115146261
 	cBufferMatrix* dataPtr = (cBufferMatrix*)(this->pMatrixBuffer->Map());
 	dataPtr->world = world;
 	D3DXMatrixLookAtLH(&dataPtr->view, &D3DXVECTOR3(0.0f, 0.0f, -5.0f), &D3DXVECTOR3(0.0f, 0.0f, 1.0f), &D3DXVECTOR3(0.0f, 1.0f, 0.0f));
@@ -142,6 +165,7 @@ bool Application::Render()
 	g_plane->SetShader(&this->gBufferShader);
 	g_plane->Render(D3DShell::self()->getDeviceContext());
 	this->gBufferShader.draw(gBufferDrawData);
+<<<<<<< HEAD
 
 	//render second pass to main render target 
 	D3DShell::self()->setRenderTarget();
@@ -150,6 +174,12 @@ bool Application::Render()
 	this->g_plane->SetShader(&g_colorShader);
 	this->g_plane->Render(D3DShell::self()->getDeviceContext());
 	this->g_colorShader.draw(gBufferDrawData);
+=======
+=======
+>>>>>>> 1ed802f4b6ab5e0da54017392c9b581129a6155b
+
+	D3DShell::self()->getDeviceContext()->Draw(6,0);
+>>>>>>> fc10602812c6af744e3636f83959958115146261
 
 	D3DShell::self()->endScene();
 
@@ -195,7 +225,7 @@ bool Application::InitInput()
 	Input::GLARE_INPUT_INIT_DESC d;
 
 	d.target = WindowShell::self()->getHWND();
-	d.deviceFlag = Input::Flags::DeviceFlags::DAFAULT;
+	d.deviceFlag = Input::Flags::DAFAULT;
 	d.deviceType = Input::Flags::keyboard;
 
 	if(!Input::self()->registerInputDevice(d))

@@ -838,10 +838,21 @@ void D3DShell::BeginGBufferRenderTargets()
 	}
 	this->getDeviceContext()->ClearDepthStencilView(this->_prDatPtr->deffDepthStencil[0], D3D11_CLEAR_DEPTH, 1.0, 0);
 
+<<<<<<< HEAD
 	this->getDeviceContext()->OMSetRenderTargets(DeferredRenderLayout::MRT_COUNT, this->_prDatPtr->deffRTV, this->_prDatPtr->deffDepthStencil[0]);
 
 }
 ID3D11ShaderResourceView*	D3DShell::getDefferedSRV()
 {
 	return this->_prDatPtr->deffSRV[0];
+=======
+
+<<<<<<< HEAD
+	aRTViews[0] = this->_prDatPtr->deffRTV;
+
+	this->getDeviceContext()->OMSetRenderTargets(DeferredRenderLayout::MRT_COUNT, aRTViews, this->_prDatPtr->deffDepthStencil);
+=======
+	this->getDeviceContext()->OMSetRenderTargets(DeferredRenderLayout::MRT_COUNT, this->_prDatPtr->deffRTV, this->_prDatPtr->deffDepthStencil[0]);
+>>>>>>> 1ed802f4b6ab5e0da54017392c9b581129a6155b
+>>>>>>> fc10602812c6af744e3636f83959958115146261
 }
