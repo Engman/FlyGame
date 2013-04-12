@@ -3,8 +3,8 @@
 
 
 #include <D3DX11\D3D11.h>
-#include "SmartPtrs.h"
-#include "GID.h"
+#include "..\Util\SmartPtrs.h"
+#include "..\Util\GID.h"
 
 namespace BUFFER_FLAG
 {

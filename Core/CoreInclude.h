@@ -15,7 +15,7 @@
 #include "D3DShell.h"
 #include "Input.h"
 #include "IShader.h"
-#include "Proxy.h"
+
 
 
 #endif

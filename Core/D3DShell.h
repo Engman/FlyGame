@@ -11,8 +11,8 @@
 #include "SamplerState.h"
 #include "BlendState.h"
 #include "ShaderFlagStates.h"
-#include "GID.h"
-#include "SmartPtrs.h"
+#include "..\Util\GID.h"
+#include "..\Util\SmartPtrs.h"
 #include "DeferredRenderingLayout.h"
 
 /**

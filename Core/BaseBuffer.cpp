@@ -1,5 +1,5 @@
 #include "BaseBuffer.h"
-#include "SmartPtrs.h"
+#include "..\Util\SmartPtrs.h"
 
 
 BaseBuffer::BaseBuffer()
