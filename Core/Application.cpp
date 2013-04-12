@@ -1,5 +1,5 @@
 #include "Application.h"
-#include "vertex.h"
+#include "..\Util\vertex.h"
 
 
 
@@ -118,6 +118,7 @@ void Application::MouseMoveEvent(Input::MouseMoveData d)
 
 bool Application::Render()
 {
+<<<<<<< HEAD
 	D3DShell::self()->beginScene();
 	D3DShell::self()->BeginGBufferRenderTargets();
 
@@ -125,11 +126,18 @@ bool Application::Render()
 
 	D3DXMATRIX world;
 	D3DXMatrixIdentity(&world);
+=======
+	//D3DShell::self()->BeginGBufferRenderTargets();
+
+
+	D3DShell::self()->beginScene();
+>>>>>>> 1ed802f4b6ab5e0da54017392c9b581129a6155b
 	
 	g_plane->Render(D3DShell::self()->getDeviceContext());
 
 	IShader::SHADER_PARAMETER_DATA gBufferDrawData;
 
+<<<<<<< HEAD
 	cBufferMatrix* dataPtr = (cBufferMatrix*)(this->pMatrixBuffer->Map());
 
 	dataPtr->world = world;
@@ -147,6 +155,8 @@ bool Application::Render()
 	//this->gBufferShader.addDrawData(gBufferDrawData);
 	
 	this->gBufferShader.draw(gBufferDrawData);
+=======
+>>>>>>> 1ed802f4b6ab5e0da54017392c9b581129a6155b
 
 	D3DShell::self()->getDeviceContext()->Draw(6,0);
 
@@ -194,7 +204,7 @@ bool Application::InitInput()
 	Input::GLARE_INPUT_INIT_DESC d;
 
 	d.target = WindowShell::self()->getHWND();
-	d.deviceFlag = Input::Flags::NOLEGACY;
+	d.deviceFlag = Input::Flags::DAFAULT;
 	d.deviceType = Input::Flags::keyboard;
 
 	if(!Input::self()->registerInputDevice(d))
